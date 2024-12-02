@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexechoi/dating-app-clone.git"
+  },
+  "author": "Alex Cho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexechoi/dating-app-clone/issues"
+  },
+  "homepage": "https://github.com/alexechoi/dating-app-clone#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
