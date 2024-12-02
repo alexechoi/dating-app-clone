@@ -7,6 +7,7 @@ export const createMatch = async (userId1: string, userId2: string) => {
         data: {
             userId1,
             userId2,
+            createdAt: new Date(), // Timestamp when the match is created
         },
     });
 };
@@ -16,5 +17,6 @@ export const getMatches = async (userId: string) => {
         where: {
             OR: [{ userId1: userId }, { userId2: userId }],
         },
+        orderBy: { createdAt: 'desc' }, // Sort matches by most recent
     });
 };

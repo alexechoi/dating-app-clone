@@ -7,6 +7,12 @@ const prisma = new PrismaClient();
 
 const PORT = process.env.PORT || 4000;
 
+// Validate environment variables
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+    console.error('❌ Missing SUPABASE_URL or SUPABASE_KEY in environment variables.');
+    process.exit(1);
+}
+
 // Initialize the server
 const server = http.createServer(app);
 
@@ -26,6 +32,20 @@ const initializeConnections = async () => {
         process.exit(1);
     }
 };
+
+// Graceful shutdown
+const shutdown = async () => {
+    console.log('🚦 Shutting down gracefully...');
+    await prisma.$disconnect();
+    server.close(() => {
+        console.log('💤 Server shut down.');
+        process.exit(0);
+    });
+};
+
+// Listen for termination signals
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
 // Start the server
 server.listen(PORT, async () => {
