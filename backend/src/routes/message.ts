@@ -3,10 +3,10 @@ import { getMessages, sendMessage } from '../models/message';
 
 const router = Router();
 
-// Get conversation history
-router.get('/:matchId', async (req, res) => {
+// Get all messages in a conversation
+router.get('/', async (req, res) => {
     try {
-        const { matchId } = req.params;
+        const matchId = req.query.matchId as string;
 
         if (!matchId) {
             return res.status(400).json({ error: 'matchId is required' });
@@ -14,16 +14,15 @@ router.get('/:matchId', async (req, res) => {
 
         const messages = await getMessages(matchId);
         res.status(200).json({ messages });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
 
 // Send a new message
-router.post('/:matchId', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const { matchId } = req.params;
-        const { senderId, content } = req.body;
+        const { matchId, senderId, content } = req.body;
 
         if (!matchId || !senderId || !content) {
             return res.status(400).json({ error: 'matchId, senderId, and content are required' });
@@ -31,7 +30,7 @@ router.post('/:matchId', async (req, res) => {
 
         const message = await sendMessage(matchId, senderId, content);
         res.status(201).json({ message });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });

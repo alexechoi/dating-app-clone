@@ -14,10 +14,10 @@ router.get('/', async (req, res) => {
         if (!profile) return res.status(404).json({ error: 'Profile not found' });
 
         // Example: Add filtering logic (e.g., based on location, interests, etc.)
-        const matches = []; // Fetch filtered potential matches here.
+        const matches: any[] = []; // Replace with actual filtered potential matches logic
 
         res.status(200).json({ matches });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
@@ -33,7 +33,7 @@ router.post('/like', async (req, res) => {
 
         const match = await createMatch(userId, likedUserId);
         res.status(201).json({ message: 'User liked successfully', match });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });
@@ -49,7 +49,7 @@ router.get('/matches', async (req, res) => {
 
         const matches = await getMatches(userId);
         res.status(200).json({ matches });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 });

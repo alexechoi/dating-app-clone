@@ -1,22 +1,22 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type Match } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const createMatch = async (userId1: string, userId2: string) => {
+export const createMatch = async (userId1: string, userId2: string): Promise<Match> => {
     return await prisma.match.create({
         data: {
             userId1,
             userId2,
-            createdAt: new Date(), // Timestamp when the match is created
+            createdAt: new Date(),
         },
     });
 };
 
-export const getMatches = async (userId: string) => {
+export const getMatches = async (userId: string): Promise<Match[]> => {
     return await prisma.match.findMany({
         where: {
             OR: [{ userId1: userId }, { userId2: userId }],
         },
-        orderBy: { createdAt: 'desc' }, // Sort matches by most recent
+        orderBy: { createdAt: 'desc' },
     });
 };
